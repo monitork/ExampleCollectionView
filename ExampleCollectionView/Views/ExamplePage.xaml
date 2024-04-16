@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExampleCollectionView.Views.ExamplePage"
+             Title="ExamplePage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <SearchBar x:Name="searchBar"
+                   Placeholder="Enter your keyword"
+                   Text="{Binding SearchTerm,Mode=TwoWay}"
+                   TextChanged="OnTextChanged"
+                   SearchCommand="{Binding SearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                   TextColor="White" />
+        <CollectionView x:Name="collectionView"
+                        Grid.Row="1"
+                        ItemsSource="{Binding Items}"
+                        IsGrouped="true">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#C49B33">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <BoxView BackgroundColor="{Binding BorderColor, FallbackValue='Black'}" />
+                            <Label Grid.Column="2" Text="{Binding Name}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Key}"
+                               FontAttributes="Bold"
+                               BackgroundColor="LightGray" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
